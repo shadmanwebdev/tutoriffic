@@ -1,0 +1,408 @@
+
+body {
+    background-color: #f7f7f7;
+}
+.card {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.card:hover {
+    -webkit-box-shadow: 0 20px 50px 0 rgba(0,0,0,.1);
+    box-shadow: 0 20px 50px 0 rgba(0,0,0,.1);
+}
+.card-body {
+    padding: 2.5rem 2rem;
+}
+
+
+.card {
+    min-width: 360px;
+    /* padding: 40px 66px 24px; */
+    -webkit-box-shadow: 0px 4px 16px rgba(96,97,112,0.08);
+    box-shadow: 0px 4px 16px rgba(96,97,112,0.08);
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+}
+
+/* Popup */
+.popup-heading {
+    display: flex;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    margin: 0 0 8px 5px;
+    color: rgb(255, 145, 77);
+}
+.subjects, .locations {
+    display: flex;
+    flex-flow: row wrap;
+}
+.textarea-container {
+    width: 100%;
+}
+.textarea-container textarea,
+.textarea-container input {
+    width: 100%;
+    padding: 16px;
+    background-color: #f7f7f7;
+    resize: none;
+    border: solid 2px #fff;
+    outline: none;
+    font-size: 16px;
+    font-weight: normal;
+    border-radius: 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    -webkit-transition: all .15s;
+    transition: all .15s;
+}
+.btns-wrapper {
+    margin: 20px auto 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.btn {
+    border-radius: 30px;
+    padding: 10px 60px;
+}
+.btn-back {
+    background: #f7f7f7;
+    margin-right: 10px;
+}
+.btn-proceed {
+    background: rgb(255, 145, 77);
+    color: #fff;
+}
+
+/* Custom checkbox */
+.custom-checkbox {
+    padding: 8px 20px 8px 5px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.custom-checkbox-inner {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* Style the label to create a custom checkbox */
+label {
+    display: inline-block;
+    position: relative;
+    padding: 10px; /* Adjust the padding as needed */
+    border: 2px solid #ccc; /* Default border color */
+    border-radius: 8px;
+    width: 20px; /* Set the width and height for the custom checkbox */
+    height: 20px;
+    background-color: #f0f0f0; /* Default background color */
+    margin-bottom: 0;
+}
+
+/* Style the label when the checkbox is checked */
+input[type="checkbox"]:checked + label {
+    color: #fff; /* Background color when checked */
+    background-color: rgb(255, 145, 77); /* Background color when checked */
+    border-color: rgb(255, 145, 77); /* Green border color when checked */
+}
+
+/* Add some inner content or icons to the label to indicate the checkbox */
+label::before {
+    content: '\2713'; /* Unicode checkmark symbol */
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;  /* Green color for the checkmark when checked */
+    font-size: 14px; /* Adjust the size of the checkmark */
+    opacity: 0; /* Hide the checkmark by default */
+}
+
+/* Style the label when the checkbox is not checked */
+input[type="checkbox"] + label {
+    transition: background-color 0.3s, border-color 0.3s; /* Add a smooth transition effect */
+}
+
+/* Show the checkmark when the checkbox is checked */
+input[type="checkbox"]:checked + label::before {
+    opacity: 1;
+}
+.checkbox-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #121212;
+    display: inline-block;
+}
+
+
+.header-demands {
+    padding: 40px;
+}
+.img-wrapper {
+    margin: 0 auto 16px;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    border-radius: 32px;
+}
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center;
+}
+.profile-infos {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    padding: 50px 40px 40px 40px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.profile-infos .name {
+    margin: 20px 0 0 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #393939;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+}
+.profile-infos .adress {
+    margin: 10px 0 0 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #b1b1b1;
+    line-height: 1.4;
+    letter-spacing: normal;
+    text-align: center;
+}
+ul.messages {
+    margin: 0;
+}
+
+.list-ad-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    max-width: 200px;
+    min-width: 200px;
+}
+.card-ad-wrapper {
+    cursor: pointer;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 80px;
+    padding: 16px;
+    background-color: #fff;
+    border: solid #d9d9d9 1px;
+    border-radius: 32px;
+    margin-bottom: 16px;
+    -webkit-transition: .15s ease-in-out;
+    transition: .15s ease-in-out;
+}
+.infos-wrapper {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+}
+.avatar-wrapper {
+    position: relative;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    margin-right: 16px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+p {
+    margin: 0;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
+    font-weight: bold;
+    line-height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.status-ad.active {
+    color: #5bca8d;
+}
+.i-circle.active {
+    background-color: #5bca8d;
+}
+.i-circle.selected {
+    border-color: #2a2a2a;
+}
+.avatar-wrapper .i-circle {
+    position: absolute;
+    bottom: -2px;
+    right: 4px;
+    border: solid #fff 2px;
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+}
+.status-ad {
+    font-size: 12px;
+    text-transform: lowercase;
+}
+.status-ad p {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+
+/* Ad */
+.my-ads-container {
+    width: 1300px;
+    margin: 50px auto;
+    display: flex;
+    flex-flow: row nowrap;
+}
+.list-ad-wrapper {
+    width: 200px;
+}
+.my-ad {
+    width: 1100px;
+}
+.myad {
+    width: 800px;
+    padding: 0 50px;
+}
+.ad-body-inner {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+/* Form */
+.ad_l {
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+    margin: 0 0 8px 0;
+    color: rgb(255, 145, 77);
+}
+.infos-container {
+    padding: 24px;
+    margin-bottom: 32px;
+    border-radius: 32px;    
+    border: solid #d9d9d9 1px;
+    background-color: #fff;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .25s ease;
+    transition: all .25s ease;
+}
+.infos-container {    
+    border: solid #d9d9d9 1px;
+    background-color: #fff;
+    -webkit-transition: all .25s ease;
+    transition: all .25s ease;
+}
+.infos-container:hover {
+    background-color: #f7f7f7;
+}
+
+.subject-name, .location-name {
+    display: inline-block;
+    padding: 8px 24px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #121212;
+    background-color: rgb(255 238 228);
+    border-radius: 40px;
+    margin-right: 3px;
+}
+
+/* Profile */        
+.ad-profile .profile-infos {
+    width: 300px;
+    border-radius: 32px;
+    border: solid #d9d9d9 1px;
+    overflow: hidden;
+}
+.details-part {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 20px 8px 0 8px;
+}
+.details-part p {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+.details-value {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin: 0;
+    margin-left: 10px;
+    font-size: 18px;
+}
+.details-value small {
+    margin-left: 3px;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .my-ads-container {
+        max-width: 90%;
+        margin: 50px auto;
+    }
+    .ad-profile {
+        display: none;
+    }
+    .myad {
+        padding: 0 10px;
+    }
+}

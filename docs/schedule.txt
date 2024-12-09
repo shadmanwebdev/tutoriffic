@@ -1,0 +1,10 @@
+Student goes to tutor profile:
+    tutor-profile.php
+
+    1. Here we save the tutor id and
+    ad id into session
+
+    2. Student 
+    a. selects date and time
+    b. we redirect them to the `schedule` page
+

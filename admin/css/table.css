@@ -1,0 +1,186 @@
+
+.card {
+    max-width: 900px;
+    margin: 50px auto;
+    margin-bottom: 24px;
+    box-shadow: 0 0 0.875rem 0 rgba(33, 37, 41, 0.05);
+    font-family: sans-serif;
+}
+.card-subtitle, .card-title {
+    font-weight: 400;
+}
+.card-title {
+    font-size: 0.875rem;
+    color: #495057;
+}
+.flex-fill {
+    flex: 1 1 auto !important;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: initial;
+    border: 0 solid transparent;
+    border-radius: 0.25rem;
+}
+.card-header:first-child {
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+.card-header {
+    border-bottom-width: 1px;
+}
+.card-header {
+    padding: 1rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 0 solid transparent;
+}
+.table tbody, 
+.table td, 
+.table tfoot, 
+.table th, 
+.table thead, 
+.table tr {
+    border-color: #dee2e6;
+}
+tbody, td, tfoot, th, thead, tr {
+    border: 0 solid;
+    border-color: inherit;
+}
+tr:first-child td, .card > .table tr:first-child th {
+    border-top: 0;
+}
+.table > :not(caption) > * > * {
+    padding: 0.75rem;
+    border-bottom-width: 1px;
+}
+th {
+    text-align: left;
+}
+
+
+.card-subtitle, .card-title {
+    font-weight: 400;
+}
+.card-title {
+    font-size: 0.875rem;
+    color: #495057;
+}
+.flex-fill {
+    flex: 1 1 auto !important;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: initial;
+    border: 0 solid transparent;
+    border-radius: 0.25rem;
+}
+.card-header:first-child {
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+.card-header {
+    border-bottom-width: 1px;
+}
+.card-header {
+    padding: 1rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 0 solid transparent;
+}
+.table tbody, 
+.table td, 
+.table tfoot, 
+.table th, 
+.table thead, 
+.table tr {
+    border-color: #dee2e6;
+}
+tbody, td, tfoot, th, thead, tr {
+    border: 0 solid;
+    border-color: inherit;
+}
+tr:first-child td, .card > .table tr:first-child th {
+    border-top: 0;
+}
+.table > :not(caption) > * > * {
+    padding: 0.75rem;
+    border-bottom-width: 1px;
+}
+th {
+    text-align: left;
+}
+
+
+/* Image */
+.td-thumb {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+}
+.td-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* Table Action */
+.table-action {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+.table-action * {
+    cursor: pointer;
+}
+
+.table-action i {
+    font-size: 18px;
+}
+.table-action a,
+.table-action span {
+    color: #6c757d;
+}
+.table-action .feather {
+    width: 18px;
+    height: 18px;
+}
+.table-action a:hover,
+.table-action span:hover {
+    color: #212529;
+}
+
+.table-action .feather {
+    width: 18px;
+    height: 18px;
+}
+.table-action span {
+    cursor: pointer;
+}
+.table-action a {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+@media screen and (max-width: 768px) {
+    .d-none {
+        display: none;
+    }
+}
+
+
+.table-action a {
+    color: #6c757d;
+}
+.table-action a:hover {
+    color: #212529;
+}

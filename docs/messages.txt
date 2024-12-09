@@ -1,0 +1,10 @@
+--------------------------------------
+Showing messages between two users
+--------------------------------------
+1. message.php
+    -> display_user_list()
+2. user-msg.php
+    -> display_user_messages() 
+        -> get_messages_for_user()
+        -> message()
+            -> get_msg_by_id()

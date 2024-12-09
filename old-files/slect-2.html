@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #container {
+            max-width: 900px;
+            margin: 80px auto;
+        }
+        #elementA > div {
+            position: relative;
+            z-index: 5;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            flex-flow: row nowrap;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            width: 100%;
+            min-height: 72px;
+            height: 100%;
+            max-height: 80px;
+            margin-bottom: 8px;
+            padding: 8px 16px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 16px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            -webkit-transition: all .15s;
+            transition: all .15s;
+
+
+            background: rgb(255,145,77);
+            cursor: pointer;
+            
+            color: #fff;
+        }
+        #elementA > div:hover {
+
+            -webkit-transform: scale(1.03);
+            transform: scale(1.03);
+        }
+        li a {
+            position: relative;
+            z-index: 5;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            flex-flow: row nowrap;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            width: 100%;
+            min-height: 72px;
+            height: 100%;
+            max-height: 80px;
+            margin-bottom: 8px;
+            padding: 8px 16px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 16px;
+            background: #f7f7f7;
+            color: #121212;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            -webkit-transition: all .15s;
+            transition: all .15s;
+        }
+        li:hover a{
+            background: rgb(255,145,77);
+            cursor: pointer;
+            -webkit-transform: scale(1.03);
+            transform: scale(1.03);
+            
+            color: #fff;
+        }
+    </style>
+    <style>
+        /* CSS styles */
+        #container {
+          display: flex;
+        }
+        #elementA {
+          flex: 1;
+        }
+        #elementB {
+          flex: 1;
+        }
+        ul {
+          display: block; /* Set the outer ul to be visible by default */
+        }
+        ul ul {
+          display: none; /* Hide inner ul elements */
+        }
+      </style>
+</head>
+<body>
+    <h2>Which subjects do you teach?</h2>
+    <div id="container">
+        <div id="elementA"></div>
+        <div id="elementB">
+            <ul>
+                <li>
+                    <a href="#" class="list-item">Item 1</a>
+                    <ul>
+                        <li><a href="#" class="inner-list-item">List item 1.1</a></li>
+                        <li><a href="#" class="inner-list-item">List item 1.2</a></li>
+                        <li><a href="#" class="inner-list-item">List item 1.3</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="list-item">Item 2</a>
+                    <ul>
+                        <li><a href="#" class="inner-list-item">List item 2.1</a></li>
+                        <li><a href="#" class="inner-list-item">List item 2.2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="list-item">Item 3</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code
+        const elementA = document.getElementById('elementA');
+        const listItems = document.querySelectorAll('.list-item');
+        const innerListItems = document.querySelectorAll('.inner-list-item');
+        const ulElements = document.querySelectorAll('#elementB ul');
+        const selectedItems = new Set(); // Store selected items to prevent duplicates
+        const selectedInnerItems = new Set(); // Store selected inner items to prevent duplicates
+
+        listItems.forEach((item, index) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                if (!selectedItems.has(item)) {
+                    // Add the text of the list item to elementA
+                    const selectedText = item.textContent;
+                    const listItem = document.createElement('div');
+                    listItem.appendChild(document.createTextNode(selectedText));
+                    elementA.appendChild(listItem);
+
+                    // Create an identifiable checkbox
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = `checkbox_${selectedText}`;
+                    checkbox.checked = true; // Initial checkbox state
+                    listItem.appendChild(checkbox);
+
+                    // Show the corresponding unordered list and hide other lists
+                    ulElements.forEach((ul, i) => {
+                        if (i === index + 1) {
+                            ul.style.display = 'block';
+                        }
+                    });
+
+                    // Mark the item as selected
+                    selectedItems.add(item);
+                }
+            });
+        });
+
+        innerListItems.forEach((item) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                if (!selectedInnerItems.has(item)) {
+                    const selectedText = item.textContent;
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = `checkbox_${selectedText}`;
+                    checkbox.checked = true; // Initial checkbox state
+                    const listItem = document.createElement('div');
+                    listItem.appendChild(document.createTextNode(selectedText));
+                    listItem.appendChild(checkbox);
+                    elementA.appendChild(listItem);
+
+                    // Mark the inner item as selected
+                    selectedInnerItems.add(item);
+                }
+            });
+        });
+
+        elementA.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                if (!e.target.checked) {
+                    // When a checkbox in elementA is unchecked, remove it from elementA
+                    const listItemText = e.target.parentNode.textContent.trim();
+                    e.target.parentNode.remove();
+
+                    // Allow the item to be selected again in elementB
+                    listItems.forEach((item) => {
+                        if (item.textContent === listItemText) {
+                            selectedItems.delete(item);
+                        }
+                    });
+                    innerListItems.forEach((item) => {
+                        if (item.textContent === listItemText) {
+                            selectedInnerItems.delete(item);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

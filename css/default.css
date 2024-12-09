@@ -1,0 +1,301 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@font-face {
+	font-family: ionicons;
+	src:url('../font/ionicons.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    min-width: 100%;
+    width: 100vw;
+    margin: 0px;
+    overflow-x: hidden; 
+}
+body {
+    font-size: 16px;
+    box-sizing: border-box;
+    letter-spacing: .1px;
+
+    font-family: 'Roboto', sans-serif;
+    word-break: normal;
+    /* letter-spacing: .1px; */
+    color: #616368;
+    box-sizing: border-box;
+}
+@media screen and (max-width: 1560px) {  
+    body {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 414px) {
+    body {
+        font-size: 15px;
+    }
+}
+ul {
+    list-style: none;
+}
+/* Link */
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover {
+    text-decoration: none;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, 
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    font-family: "Poppins", sans-serif;
+    color: #121212;
+    font-weight: 600;    
+    letter-spacing: -.2px;
+}
+p {
+    font-family: "Roboto",sans-serif;
+    color: #616368;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+/* For webkit-based browsers (Chrome, Safari) */
+select {
+    -webkit-appearance: none; /* Remove default appearance */
+    -moz-appearance: none; /* Remove default appearance for Firefox */
+    appearance: none; /* Remove default appearance for other browsers */
+} 
+/* This is for webkit-based browsers to hide the inner spin button (down arrow) */
+select::-webkit-inner-spin-button {
+    display: none;
+}
+/* This is for webkit-based browsers to hide the outer spin button (up and down arrows) */
+select::-webkit-outer-spin-button {
+    display: none;
+}
+button:focus {
+    outline: none;
+}
+  
+
+/* Scrollbar */
+/* For WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 5px; /* Adjust the width as needed */
+}
+/* Thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+    background: #d2d2d2; /* Adjust the color as needed */
+    border-radius: 3px;
+}
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+}
+/* Scrollbar color */
+* {
+    scrollbar-color: #d2d2d2 #f0f0f0; /* thumb and track colors respectively */
+}
+/* For WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 5px; /* Adjust the width as needed */
+    border-radius: 3px;
+}
+  
+/* Thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+    background: #d2d2d2; /* Adjust the color as needed */
+}
+  
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #d2d2d2 #f0f0f0; /* thumb and track colors respectively */
+}
+  
+  
+
+
+
+
+
+/* SITE SECTION */
+.site-section {
+    padding: 2.5em 0;
+}
+@media (min-width: 768px) {
+    .site-section {
+        padding: 5em 0;
+    }
+}
+@media (min-width: 991px) {
+    .site-section {
+        padding: 5em 0;
+        position: relative;
+        width: 100%;
+    }
+}
+.heading-section {
+    margin-bottom: 30px;
+}
+.heading-section h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #000;
+}
+.heading-section h2:first-child {
+    margin-bottom: 20px;
+}
+.heading-section h2:last-child {
+    margin-bottom: 0px !important;
+}
+
+.heading-section .subheading {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: rgb(255, 125, 80);
+    text-transform: uppercase;
+}
+
+/* Error */
+.error {
+    color: #ff6060;
+    font-size: 14px;
+    line-height: 1;
+    padding: 8px 4px 0px 4px;
+}
+.ms-response .error {
+    text-align: center;
+    line-height: 2.5;
+    font-size: 14px;
+    color: #ff6060;
+}
+
+
+/* Site recurring elements */
+.btn-validate {
+    background: rgb(255, 145, 77);
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px 60px;
+}
+.btn-gray {
+    border-radius: 30px;
+    padding: 10px 60px;
+    color: #fff;
+    background: #a6a6a6;
+}
+.btn-light-gray {
+    border-radius: 30px;
+    padding: 10px 60px;
+    color: #fff;
+    background: rgb(247,247,247);
+    color: #121212;
+}
+.stripe-btn {
+    background: rgb(99,91,255);
+    color: #fff;
+    border-radius: 30px;
+    padding: 12px 60px;
+    min-width: 230px;
+    transition: .3s;
+}
+.stripe-btn:hover {
+    background: rgb(70 61 255);
+    color: #fff;
+}
+.btn-gray:hover {
+    color: #fff;
+    background: #a6a6a6;
+
+}
+
+.back-link {
+    position: fixed;
+    top: 90px;
+    left: 20px;
+}
+.back-link i {
+    color: #000; 
+    font-size: 20px; 
+    color: gray;
+    cursor: pointer;
+}
+
+
+/* POPUP FORM */
+#join-popup, #login-popup  {
+    top: 30vh;
+    padding: 60px 80px;
+    width: 550px;
+    margin-left: -275px;
+}
+#join-popup h4, #login-popup h4 {
+    font-weight: 900;
+    margin-bottom: 30px;
+}
+#join-popup > div, #login-popup > div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+.h-btn.popup-btn {
+    margin-top: 30px;
+    width: 100%;
+}
+.form-control {
+    padding: 10px 20px;
+}
+input {
+    border-radius: 5px;
+}
+.form-group {
+    margin-bottom: 0 !important;
+}
+.custom-col-6 {
+    flex: 0 1 49%;
+    margin-bottom: 1rem;
+}
+.input-wrapper {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.btn-wrapper {
+    width: 100%;
+}
+.submit-btn {
+    margin-top: 5px;
+    border-radius: 6px;
+    padding: 14px 45px;
+    height: auto;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    background: rgb(255,145,77);
+    border: none;
+}
+.form-link {
+    color: rgb(255,145,77);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 576px) {
+    #join-popup, #login-popup {
+        width: 95%;
+        margin-left: -45%;
+        top: 200px;
+        margin-top: 0;
+    }
+}

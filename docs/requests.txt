@@ -1,0 +1,50 @@
+=================================================
+Requests / Bookings
+=================================================
+When showing messages between
+two users (`from_id`, `to_id`) 
+we also need to show requests between them
+(`student_id`, `tutor_id`)
+
+1. Displayed chronologically. 
+2. Requests can be updated 
+3. Chronology for the requests will be 
+created_at if updated_at is null
+4. Chronology for the requests will be 
+updated at if it is present
+5. Chronology for messages is created_at
+6. Requests must be shown in a 
+chronological order in between the messages
+
+We get messages and requests separately.
+Afterwards using php order them chronologically. 
+
+If the array item is a message we add an extra 
+key/value pair type/message. 
+
+If it's request key/value pair type/request. 
+When displaying check if the type of the item is 
+a message or a request first.
+
+
+
+Actions after creating a request
+1. Cancel/Reject (Both students and tutors)
+2. Modify (Both students and tutors)
+3. Accept (User that recieved the request)
+
+
+Schedule / Modify
+1. Modifying schedule creates a new request
+without updating/deleting the old one.
+2. Modified request has same 
+ad_id, student_id, tutor_id
+3. Modified request may have different
+request_created_by
+
+When modifying a request
+we save the updated datetimes into js session
+
+
+If submits after updating 
+1. Insert the new datetime for the new request

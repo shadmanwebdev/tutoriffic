@@ -1,0 +1,12 @@
+Report feature:
+
+1. Clicking the button opens a popup form
+2. Here user fills in details related to what they are 
+reporting the account/post for
+
+
+
+Support
+1. Open ticket
+2. View all tickets
+3. Delete tickets

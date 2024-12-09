@@ -1,0 +1,44 @@
+This is the availability
+
+-> Tutor fills in the availability calendar
+in their account panel
+    1. Display availability calendar 
+    with previously selected dates from database.
+
+    These could be either
+        a. dates saved in the database
+        b. dates user has just selected but haven't submitted
+        for update yet
+
+    Ideally we'd get all the dates and times when loading the 
+    calendar and save them into a session
+
+    1. Selects date
+    2. Fetch request sent to:   
+        get-times-popup.php
+
+        We get the previously selected times for this date
+
+        If this date has previously selected time slots 
+        then we display these time slots as highlighted
+        and with the selected class (such as `merchant-time-selected`)
+
+    3. Selects from time slots
+    4. Clicks 
+        a. Cancel (doesn't save + closes pop up)
+        b. Save (saves new time slots)
+    
+
+-> Student sees the availability calendar
+when they enter the tutor profile
+
+-> Student selects from the availabile 
+dates and times
+
+
+Developer steps:
+1. Log in to the tutor account
+2. Create the availability calendar
+    -> availability.php
+    -> set-availability-calendar.php
+

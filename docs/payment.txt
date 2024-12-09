@@ -1,0 +1,34 @@
+===============================================================
+Payment processing
+===============================================================
+Holding funds - after student pays the fee for the lesson, 
+we hold the funds until 24 hours after the lesson has been completed. 
+We then release 90% of funds to the tutors bank account.
+
+10% of payment by student goes to tutoriffic as commission fee for 
+facilitating the lesson after the 24 hours post lesson completion.
+
+===============================================================
+Refund policies
+===============================================================
+If a student requests a refund within 24 hours after their scheduled lesson, 
+a refund investigation will be undertaken by the admin team to resolve this issue.
+
+Students can request to cancel a lesson more than 24 hours before a lesson and 
+be entitled to a full refund.
+
+If students cancel within 24hours before the lesson, there is no refund allowed.
+
+If tutor cancels more than 24 hours before a lesson, student is entitled to a 
+full refund.
+
+If tutor cancels within 24hours before the lesson, student is entitled to a full refund.
+
+
+===============================================================
+Workflow
+===============================================================
+1. Authorize
+'stripe-connect/payment.php'
+2. Reauthorize (with cron job)
+3. Capture payment

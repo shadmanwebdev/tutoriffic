@@ -1,0 +1,314 @@
+We need the following feature:
+
+1. Subject is selected - we make ajax call to 
+    'subject-options-popup'
+2. Makes method call to:
+    ad_subject_options($ad_subject_id, $boards);
+3. We select boards, levels and specify price
+4. Click save
+5. Selected details are displayed under the checkbox input
+
+
+Only thing missing right now is that there is no
+levels options (GCSE, A-level) that we can select.
+
+
+Write the new code.
+
+
+    public function ad_subject_options($ad_subject_id, $boards) {
+        $subject = $this->get_ad_subject($ad_subject_id);
+
+        $boards_array = ($boards) ? json_decode($boards, true)["boards"] : array();
+        var_dump($boards_array);
+
+        $boards = "";
+        if($subject['edexcel'] == 'yes') {
+            $checked = '';
+            if(count($boards_array) > 0) {
+                if(in_array('Edexcel', $boards_array)) {
+                    $checked = 'checked';
+                }
+            }
+            $boards .= "<div class='custom-checkbox'>
+                <div class='custom-checkbox-inner'>
+                    <input data-boards-id='201' value='Edexcel' type='checkbox' id='custom-checkbox-201' $checked>
+                    <label for='custom-checkbox-201'></label>
+                </div>
+                <div class='checkbox-text'>
+                    Edexcel
+                </div>
+            </div>";
+        }
+        if($subject['aqa'] == 'yes') {
+            $checked = '';
+            if(count($boards_array) > 0) {
+                if(in_array('AQA', $boards_array)) {
+                    $checked = 'checked';
+                }
+            }
+            $boards .= "<div class='custom-checkbox'>
+                <div class='custom-checkbox-inner'>
+                    <input data-boards-id='202' value='AQA' type='checkbox' id='custom-checkbox-202' $checked>
+                    <label for='custom-checkbox-202'></label>
+                </div>
+                <div class='checkbox-text'>
+                    AQA
+                </div>
+            </div>";
+        }
+        if($subject['ocr'] == 'yes') {
+            $checked = '';
+            if(count($boards_array) > 0) {
+                if(in_array('OCR', $boards_array)) {
+                    $checked = 'checked';
+                }
+            }
+            $boards .= "<div class='custom-checkbox'>
+                <div class='custom-checkbox-inner'>
+                    <input data-boards-id='203' value='OCR' type='checkbox' id='custom-checkbox-203' $checked>
+                    <label for='custom-checkbox-203'></label>
+                </div>
+                <div class='checkbox-text'>
+                    OCR
+                </div>
+            </div>";
+        }
+
+        echo "
+        <style>
+            .btns-wrapper {
+                width: 100%; 
+                padding: 8px 20px 0 20px !important; 
+                margin: 30px 0 0px 0;
+                display: flex; 
+                flex-flow: row nowrap; 
+                justify-content: flex-end; 
+                margin-top: 20px;
+            }
+            .btn-validate {
+                background: rgb(255, 145, 77);
+                color: #fff;
+                border-radius: 30px;
+                padding: 10px 50px;
+                font-size: 15px;
+            }
+            .btn-light-gray {
+                border-radius: 30px;
+                padding: 10px 50px;
+                color: #fff;
+                background: rgb(247,247,247);
+                color: #121212;
+                font-size: 15px;
+            }
+        </style>
+
+        <div class='popup hide_popup' id='ad-subject-popup'>
+            <h4 class='popup-title' style='font-size: 20px; margin-bottom: 20px;' data-subject-name-id='{$subject['ad_subject_id']}'>{$subject['subject_name']}</h4>
+            <input type='hidden' id='ad_subject_id' name='ad_subject_id' value='{$subject['ad_subject_id']}' />
+            <div class='boards'>
+                <h6 class='popup-input-heading'>
+                    Boards
+                </h6>
+                <div class='boards-row'>  
+                    $boards
+                </div>
+            </div>
+            <div class='price'>  
+                <h6 class='popup-input-heading'>
+                    Hourly Price
+                </h6>
+                <div class='amount' data-subject-price-id='{$subject['ad_subject_id']}'>  
+                    £"."{$subject['price_hourly']}
+                </div>
+            </div>
+            <div class='btns-container'>
+
+                <div class='col-left'>
+                    <button onclick='closePopup();' class='btn reject'>Cancel</button>
+                </div>
+                <div class='col-right'>
+                    <button class='btn accept' onclick='save_subject_options()'>Done</button>
+                </div>
+            </div>
+
+        </div>";
+
+    }
+
+
+
+function get_subject_popup(el) {
+
+    const adSubjectId = el.getAttribute('data-ad-subj-id');
+
+    // Boards in the clicked subject item
+    const boardElements = el.querySelectorAll('.ad-subject-boards div');
+    const boardNames = Array.from(boardElements).map(boardEl => boardEl.textContent);
+    console.log('Board Names:', boardNames);
+    // Create an object to send via JSON
+    const boardsData = {
+        boards: boardNames
+    };
+    const jsonboardsData = JSON.stringify(boardsData);
+
+    const formData = new FormData();
+    formData.append('ad_subject_id', adSubjectId);
+    formData.append('boards', jsonboardsData);
+    
+    fetch('./subject-options-popup', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(response => {
+        setTimeout(function() {
+            console.log(response);
+            $('#ad-subject-popup-wrapper').html(response);
+            popup('ad-subject-popup');
+        }, 500);
+    })
+    .catch( err => console.log(err));
+
+}
+
+function send_subject_options() {
+    // Retrieve session data for subjects or initialize if not present
+    var subjectsSession = JSON.parse(sessionStorage.getItem('subjects')) || {};
+
+    // Get the div with the id 'subjects-2'
+    var subjects2Div = document.getElementById('subjects-2');
+
+    // Get the value for the 'ad_subject_id' input
+    var adSubjectId = document.getElementById('ad_subject_id').value;
+
+    // Get the text for 'data-subject-name-id' and 'data-subject-price-id' that matches adSubjectId
+    var subjectName = document.querySelector('[data-subject-name-id="' + adSubjectId + '"]').textContent;
+    var subjectPrice = document.querySelector('[data-subject-price-id="' + adSubjectId + '"]').textContent;
+
+    // Remove old element for this subject
+    var prevSubject = document.querySelector('[data-subject-id="' + adSubjectId + '"]');
+    if (prevSubject) {
+        subjects2Div.removeChild(prevSubject);
+    }
+    // Create a new div element for the subject
+    var subjectDiv = document.createElement('div');
+    subjectDiv.setAttribute('data-subject-id', adSubjectId);
+    subjectDiv.classList.add('subject-summary');
+
+    // Create and append elements for the subject
+    var nameElement = document.createElement('div');
+    nameElement.setAttribute('data-id', adSubjectId);
+    nameElement.classList.add('subject-name');
+    nameElement.textContent = subjectName;
+
+    // Get the checkboxes with the data attribute 'data-boards-id'
+    var checkboxes = document.querySelectorAll('input[data-boards-id]:checked');
+
+    // Create a new div element outside the loop
+    var boardsElement = document.createElement('div');
+    boardsElement.classList.add('selected-boards');
+
+    var num_of_boards = checkboxes.length;
+    
+    // Collect board selections for session storage
+    var selectedBoards = [];
+
+    // Loop through checked checkboxes
+    var i = 1;
+    checkboxes.forEach(function (checkbox) {
+        // Get data attribute value and input value
+        var boardId = checkbox.getAttribute('data-boards-id');
+        var inputValue = checkbox.value;
+
+        // Create a new div element
+        var newDiv = document.createElement('div');
+
+        console.log(boardId);
+
+        // Set data attribute and text content
+        newDiv.setAttribute('data-subject-board-id', boardId);
+        newDiv.textContent = inputValue;
+
+
+
+        // Append the newDiv to the boardsElement
+        boardsElement.appendChild(newDiv);
+
+        if(i < num_of_boards) {
+            var commaElem = document.createElement('div');
+            commaElem.textContent = ',';
+            commaElem.classList.add('comma');
+            boardsElement.appendChild(commaElem);
+        }
+
+        
+        // Collect the board for session storage
+        selectedBoards.push({
+            boardId: boardId,
+            value: inputValue
+        });
+
+
+        i++;
+    });
+
+    var priceElement = document.createElement('div');
+    priceElement.setAttribute('data-selected-price-id', adSubjectId);
+    priceElement.textContent = subjectPrice;
+
+    // Append elements to the subjectDiv
+    subjectDiv.appendChild(nameElement);
+    subjectDiv.appendChild(boardsElement);
+    subjectDiv.appendChild(priceElement);
+
+    // Append the subjectDiv to the 'subjects-2' element
+    subjects2Div.appendChild(subjectDiv);
+
+    // Update the session storage with the current subject
+    if(selectedBoards.length > 0) {
+        subjectsSession[adSubjectId] = {
+            name: subjectName,
+            price: subjectPrice,
+            boards: selectedBoards
+        };
+
+    } else {
+        delete subjectsSession[adSubjectId];
+        
+        const adSubj = document.querySelector(`[data-ad-subj-id="${adSubjectId}"]`);
+
+        console.log(124, adSubj);
+        // Check if element exists before removing the class
+        if (adSubj) {
+            adSubj.classList.remove('selected-ad-subject');
+            // console.log(adSubj);
+        }
+
+        const adSubjPrice = document.querySelector(`[data-price-id="${adSubjectId}"]`);
+        if (adSubjPrice) {
+            adSubjPrice.textContent = '';
+            console.log(adSubjPrice);
+        }
+    }
+
+    console.log(subjectsSession);
+    // Save updated subjects to session storage
+    sessionStorage.setItem('subjects', JSON.stringify(subjectsSession));
+    
+
+    // Create total price
+    var priceTotal = document.getElementById('price-total');
+
+    var pricesAll = document.querySelectorAll('[data-selected-price-id]');
+
+    // Set ntital price
+    var total = 0;
+    pricesAll.forEach(priceSingle => {
+        var itemPriceString = priceSingle.textContent.replace('£', ''); // Remove currency symbol
+        var itemPrice = parseFloat(itemPriceString.replace(',', '')); // Remove commas and parse as float
+        total += itemPrice;
+    });
+
+    priceTotal.textContent = '£' + total.toFixed(2); // Display total with two decimal places
+}

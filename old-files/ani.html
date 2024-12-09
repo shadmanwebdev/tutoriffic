@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #boxA {
+            width: 300px;
+            height: 300px;
+            background-color: lightblue;
+            position: relative;
+        }
+        
+        #boxB {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -50px;
+            margin-top: -50px;
+            z-index: 10000;
+            transform: scale(0);
+            opacity: 0;
+            animation: 6s a1 infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 25px;
+            font-weight: bold;
+            border-radius: 24px;
+    }
+    #ques {
+        border: 1px solid red;
+            background-color: #fff;
+            color: #090707;
+        width: 30px;
+        height: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -15px;
+            margin-top: -15px;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+
+            transform: translateX(-200px);
+            opacity: 0;
+            animation: 6s a2 infinite;
+    }
+
+    @keyframes a2 {
+        /* 
+            question starts from left with opacity 0;
+        */
+        0% {
+            
+            transform: translateX(-200px);
+            opacity: 1;
+        }
+        /* 
+            question remains where it is thus giving time for the box to appear
+        */
+        10% {
+            transform: translateX(-200px);
+            opacity: 1;
+        }
+        /* 
+            10% -25%
+            question moves to the right
+        */
+        25% {
+            transform: translateX(-80px);
+        }
+        /* 
+            25% - 50%
+            question moves further to the right
+        */
+        50% {
+            transform: scale(1) translateX(-50px);
+        }
+        /* 
+            50% - 75%
+            question moves back to the left
+        */
+        75% {
+            transform: scale(1) translateX(-70px);
+            opacity: 1;
+        }
+        /* 
+            75% - 76%
+            question disappears
+        */
+        76% {
+            opacity: 0;
+        }
+        /* 
+            76% - 100%
+            question moves to the starting point
+        */
+        100% {            
+            transform: scale(1) translateX(-200px);
+            opacity: 0;
+        }
+    }
+    @keyframes a1 {
+        0% {
+            background-color: red;
+            transform: scale(0) translateX(0px);
+            opacity: 0;
+        }
+        25% {
+            background-color: red;
+            transform: scale(1) translateX(0px);
+            opacity: 1;
+        }
+        40% {
+            background-color: red;
+            transform: scale(1 translateX(0px));
+            opacity: 1;
+        }
+        50% {
+            background-color: red ;
+            transform: scale(1) translateX(30px);
+            opacity: 1;
+        }
+        75% {
+
+            
+            background-color: green;
+            transform: scale(1) translateX(-50px);
+            opacity: 1;
+        }
+        100% {        
+            
+            background-color: green;    
+            transform: scale(0) translateX(50px);
+            opacity: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="boxA">
+        <div id="ques">?</div>
+        <div id="boxB">08</div>
+        <div class="circle"></div>
+    </div>
+</body>
+</html>

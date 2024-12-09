@@ -1,0 +1,106 @@
+======================================================
+    Modifications for messaging variant 2
+======================================================
+Get rid of following functions
+    create_message_admin()
+    get_user_list_admin()
+    createForm()
+
+
+Alter functions:
+    1. No need to create different size variants for images in create_message()
+    2. Change all the queries and column names
+    3. Instead of getting associated videos or associated images we get
+    associated files
+    4. hasIndividualMessage() could simply change to has message
+    as the first message will be sent as a request what we can do is have it
+    as a request but also create a message that'll be shown in messaging
+    5. We don't need functions under IMAGE & VIDEOS. Instead these will be
+    functions that can upload/insert files/filenames and delete them
+
+Remove tables columns:
+    1. msgs:
+        msg_for, price, price, msg_access, countdown
+
+
+
+
+1. No images or videos. Instead attach downloadable files
+2. We don't need to check countdowns
+3. We don't need to check if message is paid or not
+4. No sending bulk messages
+5. Show requests/scheduling in messages
+or
+create the first message as a request
+6. No access/membership levels
+
+
+======================================================
+    Key Features
+======================================================
+1. Messaging:
+Divided into 2 main parts
+    a. Chatting with an individual user
+    b. Sending messages based on membership level
+
+2. Access to messages
+Based on subscription
+    a. Messages individual users can see
+    b. Messages everyone can see
+    c. Messages only subscribers can see
+Based on payment
+    a. Free messages
+    b. Pay to unlock messages
+
+3. Countdown
+Messages that have a countdown timer set.
+Are visible only once the countdown ends.
+If it's a paid message the 'Pay to unlock' button is visible
+after countdown ends.
+
+
+
+======================================================
+    Data Flow
+======================================================
+User logs in and goes to messages page
+
+-> Views a list of users (alter the order in which the list is shown)
+    -> display_user_list('msg_id', 'ASC', null, $currentUserId)
+        -> get_user_list()
+        or
+        -> get_user_list_admin()
+
+-> Clicks on a user name. This sends an ajax request to the 'user-msg.php'
+with the selected user's id
+
+-> This calls the function 'display_user_messages()'
+inside the 'DirectMessage' class
+
+-> Inside display_user_messages() it calls following functions
+    -> get_messages_for_user()
+    -> message()
+        -> get_msg_by_id()
+    Here's how the code works inside 'message()'
+    1. Get the message
+    2. Store number of images and videos in variables
+    3. Turn the text content into paragraphs
+    4. If number of videos is more than 0 add these to the string
+    5. If number of images is more than 0 add these to the string
+    6. Check if the message has a countdown set
+
+    7. If it does check 
+    -> If it is paid or free
+    -> If the countdown is finished or not
+    -> if the person viewing it is admin or not
+
+    8. If countdown is finished 
+    and message is a paid message
+    and person viewing it is not admin
+    show the pay to unlock button
+
+    9. If has no countdown check
+    -> If it is paid or free
+    -> if the person viewing it is admin or not
+
+

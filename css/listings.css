@@ -1,0 +1,182 @@
+/* Range */
+#range-container {
+    margin: 20px;
+}
+.ui-widget.ui-widget-content {
+    margin-bottom: 10px;
+    height: 7px;
+    background: #e9ecef;
+    border: none;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, 
+.ui-widget-header .ui-state-default, .ui-button, 
+html .ui-button.ui-state-disabled:hover, 
+html .ui-button.ui-state-disabled:active {
+    background: #fff !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 3px solid rgb(255,145,77);
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    outline: none;
+}
+.ui-slider-horizontal .ui-slider-range {
+    box-shadow: none;
+    height: 7px;
+    background: rgb(255,145,77);
+    border: none;
+}
+
+/* Dropdown */
+.triggers {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.dropdown-container {
+    position: relative;
+    min-width: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+.trigger, span.filter-trigger {
+    padding: 10px 20px;
+    color: #fff;
+    color: rgb(255,145,77);
+    background-color: #fff;
+    font-size: 14px;
+    border-radius: 32px;
+    margin-right: 10px;
+    border: 1px solid rgb(255,145,77);
+    cursor: pointer;
+}
+
+.trigger {
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+span.filter-trigger {
+    text-align: center;
+    min-width: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.filter-dropdown {
+    width: 408px;
+    height: auto;
+    -webkit-border-radius: 32px;
+    border-radius: 32px;
+    /* display: block; */
+    background-color: #fff;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 30px;
+    border: 1px solid #d9d9d9;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    top: 100%; /* Position below the filter option */
+    left: 0;
+}
+/* Active */
+.trigger.active {
+    display: block;
+    position: absolute;
+    z-index: 1000;
+}
+.dropdown.active {
+    display: block;
+    position: absolute;
+    top: 50px;
+    z-index: 1000;
+}
+.trigger.filtering {
+    background: rgb(255, 145, 77);
+    color: #fff;
+}
+
+/* Checkbox */
+.custom-checkbox {
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.custom-checkbox-inner {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* Style the label to create a custom checkbox */
+label {
+    display: inline-block;
+    position: relative;
+    padding: 10px; /* Adjust the padding as needed */
+    border: 2px solid #ccc; /* Default border color */
+    border-radius: 8px;
+    width: 20px; /* Set the width and height for the custom checkbox */
+    height: 20px;
+    background-color: #f0f0f0; /* Default background color */
+    margin-bottom: 0;
+}
+
+/* Style the label when the checkbox is checked */
+input[type="checkbox"]:checked + label {
+    color: #fff; /* Background color when checked */
+    background-color: rgb(255, 145, 77); /* Background color when checked */
+    border-color: rgb(255, 145, 77); /* Green border color when checked */
+}
+
+/* Add some inner content or icons to the label to indicate the checkbox */
+label::before {
+    content: '\2713'; /* Unicode checkmark symbol */
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;  /* Green color for the checkmark when checked */
+    font-size: 14px; /* Adjust the size of the checkmark */
+    opacity: 0; /* Hide the checkmark by default */
+}
+
+/* Style the label when the checkbox is not checked */
+input[type="checkbox"] + label {
+    transition: background-color 0.3s, border-color 0.3s; /* Add a smooth transition effect */
+}
+
+/* Show the checkmark when the checkbox is checked */
+input[type="checkbox"]:checked + label::before {
+    opacity: 1;
+}
+.checkbox-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #121212;
+    display: inline-block;
+}
+
+.dropdown-container {
+    min-width: 130px;
+}
+.trigger {
+    white-space: nowrap;
+    min-width: 130px;
+}
+.trigger.active {
+    min-width: 130px;
+}
