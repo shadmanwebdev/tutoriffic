@@ -1,12 +1,11 @@
 ===============================================================
 Payment processing
 ===============================================================
-Holding funds - after student pays the fee for the lesson, 
-we hold the funds until 24 hours after the lesson has been completed. 
-We then release 90% of funds to the tutors bank account.
-
-10% of payment by student goes to tutoriffic as commission fee for 
-facilitating the lesson after the 24 hours post lesson completion.
+1. Student pays lesson fee
+2. We hold the funds until 24 hours after the lesson has been completed.
+3. We release 
+    -> 90% of funds to the tutors bank account.
+    -> 10% of payment goes to tutoriffic as commission fee
 
 ===============================================================
 Refund policies
@@ -24,11 +23,40 @@ full refund.
 
 If tutor cancels within 24hours before the lesson, student is entitled to a full refund.
 
+===============================================================
+Files
+===============================================================
+Classes/
+    StripePayment.php
+
+stripe-connect/
+    payment.php
+
+cronjob/
+    reauthorize-payment.php
+    capture-funds.php
+
 
 ===============================================================
-Workflow
+Payment flow
 ===============================================================
 1. Authorize
-'stripe-connect/payment.php'
+    'stripe-connect/payment.php'
+    -> processPayment() 
+        -> savePaymentData()
+        -> create_payment_intent()  - database insert
+
 2. Reauthorize (with cron job)
+    -> getPendingPaymentsToReauthorize()
+        -> reauthorizePayment() 
+        -> updatePaymentStatus()  - database update
+
 3. Capture payment
+    -> captureFunds()
+        -> getPendingPayments()
+        -> markPaymentCaptured()  - database update
+
+
+Refund
+    -> processRefund()
+        -> markRefundProcessed()  - database update

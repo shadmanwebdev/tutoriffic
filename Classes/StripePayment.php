@@ -316,35 +316,87 @@ class StripePayment extends Db {
 
     
 
-    function savePaymentData($paymentIntent, $adId) {
-        $studentId = get_uid();
-        $ad = new Ad();
-        $ad_array = $ad->get_single_ad($adId);
-        $tutorId = $ad_array['tutor_uid'];
-    
+    // Process payment using Google Pay and Stripe
+    public function processPayment($googlePayToken, $adId, $requestId, $studentId, $tutorId, $connectedAccountId) {
+        try {
+            // Initialize Stripe client
+            $stripe = new \Stripe\StripeClient('sk_test_51HaRBvH4rZ2esk0gVLhm1gau461S79SplnfqILPewecNwf6eL2rx65j8ZEohqd0AJ9ks04FRZAOfJoDIlfd88lJr00iqXh7mM9');
+
+            // Extract Google Pay payment token details
+            $googlePayToken = json_decode($googlePayToken, true);
+            $paymentMethodId = $googlePayToken['id'];
+
+            // Create a PaymentMethod
+            $googlePayPaymentMethod = $stripe->paymentMethods->create([
+                'type' => 'card',
+                'card' => ['token' => $paymentMethodId],
+            ]);
+
+            // Create a Payment Intent
+            $paymentIntent = $stripe->paymentIntents->create([
+                'payment_method' => $googlePayPaymentMethod->id,
+                'payment_method_types' => ['card'],
+                'amount' => 1000, // Example: 1000 cents = $10
+                'currency' => 'usd',
+                'application_fee_amount' => 100, // 10 = $0.10 (10% commission)
+                'capture_method' => 'manual',
+                'confirm' => true,
+                'transfer_data' => ['destination' => $connectedAccountId],
+            ]);
+
+            // Save payment data in the database
+            $this->savePaymentData($paymentIntent, $adId, $requestId, $studentId, $tutorId, $connectedAccountId);
+
+        } catch (\Stripe\Exception\CardException $e) {
+            // Handle card errors
+            echo 'Card Error: ' . $e->getMessage();
+        } catch (\Stripe\Exception\RateLimitException $e) {
+            // Handle rate limit errors
+            echo 'Rate Limit Error: ' . $e->getMessage();
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // Handle invalid request errors
+            echo 'Invalid Request Error: ' . $e->getMessage();
+        } catch (\Stripe\Exception\AuthenticationException $e) {
+            // Handle authentication errors
+            echo 'Authentication Error: ' . $e->getMessage();
+        } catch (\Stripe\Exception\ApiConnectionException $e) {
+            // Handle API connection errors
+            echo 'API Connection Error: ' . $e->getMessage();
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle generic API errors
+            echo 'API Error: ' . $e->getMessage();
+        } catch (Exception $e) {
+            // Handle other exceptions
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    // Save payment intent details to the database
+    public function savePaymentData($paymentIntent, $adId, $requestId, $studentId, $tutorId) {
         $paymentIntentId = $paymentIntent->id;
+        $paymentMethod = $paymentIntent->payment_method;
+        $connectedAccountId = $paymentIntent->transfer_data->destination;
         $amount = $paymentIntent->amount;
         $currency = $paymentIntent->currency;
         $createdAt = $paymentIntent->created;
         $paymentStatus = $paymentIntent->status;
-    
-        // Insert into database
-        $pay = new StripePayment();
-        $pay->create_payment_intent(
-            $paymentIntentId, null, $paymentIntent->transfer_data->destination,
-            $amount, $currency, $createdAt, $paymentStatus, $studentId, $tutorId, $adId
+
+        $this->create_payment_intent(
+            $paymentIntentId, $paymentMethod, $connectedAccountId,
+            $amount, $currency, $createdAt, $paymentStatus, 
+            $studentId, $tutorId, $requestId
         );
     }
-    function markPaymentCaptured($paymentId) {
+    public function markPaymentCaptured($paymentId) {
         // Placeholder: Update the database to mark this payment as captured
         // Replace this with your actual database logic
         echo "Payment ID " . $paymentId . " marked as captured.\n";
     }
-    function captureFunds() {
+    public function captureFunds() {
         $stripe = new \Stripe\StripeClient('sk_test_51HaRBvH4rZ2esk0gVLhm1gau461S79SplnfqILPewecNwf6eL2rx65j8ZEohqd0AJ9ks04FRZAOfJoDIlfd88lJr00iqXh7mM9');
         
         // Fetch pending payments eligible for capture
-        $payments = $this->getPendingPayments(); // Retrieve payments from the database
+        $payments = $this->getPendingPayments();
         
         foreach ($payments as $payment) {
             $lessonEndTime = strtotime($payment['lesson_end_time']);
@@ -378,21 +430,8 @@ class StripePayment extends Db {
             return array();
         }
     }
-
-    function processRefund($paymentIntentId) {
-        $stripe = new \Stripe\StripeClient('sk_test_51HaRBvH4rZ2esk0gVLhm1gau461S79SplnfqILPewecNwf6eL2rx65j8ZEohqd0AJ9ks04FRZAOfJoDIlfd88lJr00iqXh7mM9');
     
-        try {
-            // Create a refund
-            $stripe->refunds->create(['payment_intent' => $paymentIntentId]);
-    
-            // Update database to mark refund processed
-            markRefundProcessed($paymentIntentId);
-        } catch (\Stripe\Exception\ApiErrorException $e) {
-            logError('Refund Error: ' . $e->getMessage());
-        }
-    }
-    public function getPendingPayments() {
+    public function getPendingPaymentsToReauthorize() {
         // Get the current timestamp
         $currentTimestamp = time();
         
@@ -449,6 +488,25 @@ class StripePayment extends Db {
         }
     }
     
+    // Refund
+    public function markRefundProcessed($paymentId) {
+        // Placeholder: Update the database to mark this payment as refunded
+        // Replace this with your actual database logic
+        echo "Payment ID " . $paymentId . " marked as refunded.\n";
+    }
+    function processRefund($paymentIntentId) {
+        $stripe = new \Stripe\StripeClient('sk_test_51HaRBvH4rZ2esk0gVLhm1gau461S79SplnfqILPewecNwf6eL2rx65j8ZEohqd0AJ9ks04FRZAOfJoDIlfd88lJr00iqXh7mM9');
+    
+        try {
+            // Create a refund
+            $stripe->refunds->create(['payment_intent' => $paymentIntentId]);
+    
+            // Update database to mark refund processed
+            $this->markRefundProcessed($paymentIntentId);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            logError('Refund Error: ' . $e->getMessage());
+        }
+    }
 }
 
 

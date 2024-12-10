@@ -13,5 +13,5 @@
 
     // Run the function to capture funds   
     $pay = new StripePayment;
-    $res = $pay->captureFunds();
+    $res = $pay->getPendingPaymentsToReauthorize();
 ?>

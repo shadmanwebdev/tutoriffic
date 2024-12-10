@@ -506,28 +506,18 @@ See you soon, Shadman";
         $stmt->close();
         return $requests;
     }
-    public function create_request() {
+    public function create_request($student_id, $tutor_id, $request_type=null) {
         $ad_id = $_POST["ad_id"];
         $subjects = $_POST['subjects'];
         $msg = $_POST['message'];
         $expectation = $_POST['expectation'];
         $lesson_length = $_POST['lesson_length'];
-        $request_type = $_POST['lesson_type'];
+        $request_type = ($request_type!=null) ? $request_type : $_POST['lesson_type'];
         $request_status = 'created';   
 
-        $account_type_id = user_account_type_id();     
-        if($account_type_id == 2) {
-            // Student
-            $student_id = get_uid();
-        } else {
-            // Tutor
-            $student_id = $_POST['student_id'];
-        }
+
         $created_at = datetime_now();
 
-        // Student & Tutor Ids
-        $ad_details = $this->ad->get_single_ad($ad_id);
-        $tutor_id = $ad_details["tutor_uid"];
 
         $request_created_by = get_uid();
 
